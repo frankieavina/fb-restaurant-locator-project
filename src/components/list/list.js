@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import placeDetail from "../placeDetails/PlaceDetails"
+import PlaceDetail from "../placeDetails/PlaceDetails"
 const List = () => {
     const [type, setType] = useState("restaurants");
     const [rating, setRating] = useState("");
@@ -34,7 +34,7 @@ const List = () => {
         </form>
         <div className="list">
             {places?.map((place,i) => (
-                <placeDetails place={place}/>
+                <PlaceDetail place={place}/>
             ))}
 
         </div>
