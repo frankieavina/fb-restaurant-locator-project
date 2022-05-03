@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import List from '../list/list';
+import List from '../list/List';
 import Map from '../map/Map';
 
 function Home() {
