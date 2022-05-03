@@ -27,6 +27,7 @@ const Map = () =>{
     // useStates
     // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
     const [markers, setMarkers] = useState([]);
+    const [selected, setSelected] = useState(null);
     // google maps hook the loads the google pai script 
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
@@ -68,6 +69,9 @@ const Map = () =>{
                     <Marker 
                         key={marker.time.toISOString()} 
                         position={{lat:marker.lat, lng:marker.lng}}
+                        onClick={() =>{
+                            setSelected(marker);
+                        }}
                     /> 
                 ))}
             </GoogleMap>
