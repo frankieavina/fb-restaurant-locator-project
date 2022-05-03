@@ -1,5 +1,4 @@
-import React from 'react';
-// import GoogleMapReact from 'google-map-react'; 
+import {React, useState} from 'react'; 
 import {
     GoogleMap,
     useLoadScript,
@@ -7,42 +6,60 @@ import {
     InfoWindow
 } from '@react-google-maps/api'; 
 
-
+// initializing some variable 
 const mapContainerStyle = {
     height: "100vh",
     width: "100vw",
 };
-// const options = {
-//     styles: mapStyles,
-//     disableDefaultUI: true,
-//     zoomControl: true,
-// };
+const options = {
+    disableDefaultUI: true,
+    zoomControl: true,
+};
 const center = {
     lat: 43.6532,
     lng: -79.3832,
 };
 const libraries = ['places'];
 
+
+
 const Map = () =>{
-    
-
-
+    // useStates
+    // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
+    const [markers, setMarkers] = useState([]);
+    // google maps hook the loads the google pai script 
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
         libraries
     });
-
+    // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
+     
+     
 
     return(
         <div>
+            {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={8}
                 center={center}
-            >
-
+                options={options}
+                onClick={(event) => {
+                    setMarkers(current => [...current, {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng(),
+                        time: new Date(), 
+                    }])
+                }}
+            > 
+                {markers.map((marker) => (
+                    <Marker 
+                        key={marker.time.toISOString()} 
+                        position={{lat:marker.lat, lng:marker.lng}}
+                    /> 
+                ))}
             </GoogleMap>
         </div>
     )
