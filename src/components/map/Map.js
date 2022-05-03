@@ -74,6 +74,12 @@ const Map = () =>{
                         }}
                     /> 
                 ))}
+                {selected  ?(<InfoWindow position={{lat:selected.lat, lng: selected.lng}}>
+                    <div>
+                        <h2> Restaurant Selected</h2>
+                        <p> Lat:{selected.lat} Lng:{selected.lng} </p>
+                    </div>
+                </InfoWindow>) : null}
             </GoogleMap>
         </div>
     )
