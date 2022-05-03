@@ -1,4 +1,4 @@
-import {React, useState} from 'react'; 
+import {React, useCallback, useState} from 'react'; 
 import {
     GoogleMap,
     useLoadScript,
@@ -32,6 +32,16 @@ const Map = () =>{
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
         libraries
     });
+
+
+    const onMapClick = useCallback((event) => {
+        setMarkers(current => [...current, {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng(),
+            time: new Date(), 
+        }])
+    },[])
+
     // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
@@ -46,13 +56,7 @@ const Map = () =>{
                 zoom={8}
                 center={center}
                 options={options}
-                onClick={(event) => {
-                    setMarkers(current => [...current, {
-                        lat: event.latLng.lat(),
-                        lng: event.latLng.lng(),
-                        time: new Date(), 
-                    }])
-                }}
+                onClick={onMapClick}
             > 
                 {markers.map((marker) => (
                     <Marker 
