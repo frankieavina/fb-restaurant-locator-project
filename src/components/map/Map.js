@@ -1,10 +1,11 @@
-import {React, useCallback, useRef, useState} from 'react'; 
+import {React, useCallback, useRef, useState, useContext, useEffect} from 'react'; 
 import {
     GoogleMap,
     useLoadScript,
     Marker,
     InfoWindow
 } from '@react-google-maps/api'; 
+import LocationContext from '../../context/LocationContext';
  
 
 // initializing some variable 
@@ -16,19 +17,32 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true,
 };
-const center = {
-    lat: 43.6532,
-    lng: -79.3832,
-};
+// const center = {
+//     lat: 43.6532,
+//     lng: -79.3832,
+// };
 const libraries = ['places'];
 
 
 
 const Map = () =>{
+
+    // importing context to use coordinates and restaurants
+    const { restaurants, coordinates, locations } = useContext(LocationContext);
+
     // useStates
     // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
+    const [center, setCenter] = useState();
+
+    useEffect(() =>{
+        const lat = parseFloat(coordinates.lat,10);
+        const lng = parseFloat(coordinates.long,10);
+        setCenter({lat:lat, lng:lng})
+      }, []);
+
+
     // google maps hook the loads the google pai script 
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
@@ -49,9 +63,15 @@ const Map = () =>{
         mapRef.current = map;
     })
 
+    const panTo = useCallback(({lat,lng}) => {
+        mapRef.current.panTo({lat, lng});
+        mapRef.current.setZoom(14); 
+    })
+
     // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
+    console.log("Center:",center); 
      
      
 
@@ -60,7 +80,7 @@ const Map = () =>{
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={8}
+                zoom={13}
                 center={center}
                 options={options}
                 onClick={onMapClick}
