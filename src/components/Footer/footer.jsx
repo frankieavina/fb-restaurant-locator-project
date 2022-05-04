@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// adding material icon 
-import AppleIcon from '@material-ui/icons/Apple';
 
 const FooterWrapper = styled.footer`
   background-color: #333;
@@ -14,7 +12,6 @@ const Footer = () => {
   return (
     <FooterWrapper>
       Betelihem A Hayle and Frankie Avina © 2022
-      <AppleIcon/>
     </FooterWrapper>
   );
 };

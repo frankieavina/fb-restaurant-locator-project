@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 // importing Context (location context)
@@ -53,7 +53,7 @@ const Header = () => {
           className="search-text"
           type="text"
           name=""
-          value={restaurantName}
+          value={locationName}
           placeholder="Type to search location....."
           onChange={(e) => {setLocationName(e.target.value)}}
         />

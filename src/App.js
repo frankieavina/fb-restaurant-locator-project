@@ -12,17 +12,17 @@ import {getRestaurantData} from "./components/api/api-key";
 
 function App() {
 
-  const [locations, setLocations] = useState([]);
+  const [locations, setLocations] = useState("Fresno, CA");
   const [places, setPlaces] = useState ([]);
   useEffect(() =>{
-    getRestaurantData()
+    getRestaurantData(locations)
     .then((data) =>{
       setPlaces(data);
       console.log(data)
 
     })
 
-  }, []);
+  }, [locations]);
 
   return (
     <div className="App">
