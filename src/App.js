@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import LocationContext from './context/LocationContext';
 import {Routes,Route} from 'react-router-dom';
-import Home from './components/Home/Home';
+import Home from './components/Home/home';
 import PlaceDetails from './components/placeDetails/PlaceDetails'
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
