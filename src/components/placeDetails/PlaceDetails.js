@@ -4,8 +4,7 @@
 
 const PlaceDetails = ({place}) =>{
 
-    // consuming or using location context 
-    // const {locations} = useContext(LocationContext)
+
 
     return(
         <div>

@@ -28,7 +28,7 @@ function App() {
     <div className="App">
       
       {/* providing context  */}
-      <LocationContext.Provider value={{locations:places}}>
+      <LocationContext.Provider value={{restaurants: places}}>
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>} />
