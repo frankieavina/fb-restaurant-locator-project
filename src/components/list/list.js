@@ -1,15 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import PlaceDetail from "../placeDetails/PlaceDetails"
+import LocationContext from "../../context/LocationContext";
+
 
 const List = () => {
-    const [type, setType] = useState("restaurants");
-    const [rating, setRating] = useState("");
 
-    const places = [
-        { name: 'cool place'},
-        { name: 'betst food'},
-        { name: ' perfect place'},
-        { name: 'wondefull place'}
-    ]
+  // have locations(restaurants array) available to us in the list component
+  const { restaurants } = useContext(LocationContext);
+
+  const [type, setType] = useState("restaurants");
+  const [rating, setRating] = useState("");
+
     return (
       <div className="list-container">
         <h3>Restaurants</h3>
@@ -28,6 +29,12 @@ const List = () => {
             <menuItem value={'4.5'}> Above 4.5</menuItem>
           </select>
         </form>
+        <div className="list">
+            {restaurants?.map((data) => (
+                <PlaceDetail place={data}/>
+            ))}
+
+        </div>
       </div>
     );
   };

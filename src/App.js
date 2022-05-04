@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import LocationContext from './context/LocationContext';
 import {Routes,Route} from 'react-router-dom';
@@ -7,10 +7,22 @@ import PlaceDetails from './components/placeDetails/PlaceDetails'
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 
+import {getRestaurantData} from "./components/api/api-key";
+
 
 function App() {
 
-  const [locations, setLocations] = useState([]); 
+  const [locations, setLocations] = useState([]);
+  const [places, setPlaces] = useState ([]);
+  useEffect(() =>{
+    getRestaurantData()
+    .then((data) =>{
+      setPlaces(data);
+      console.log(data)
+
+    })
+
+  }, []);
 
   return (
     <div className="App">
@@ -19,6 +31,7 @@ function App() {
       <LocationContext.Provider 
         value={{
           locations:locations,
+          restaurants: places,
           setLocationSearch:(searchLocation) => {
               setLocations(searchLocation);
           },
