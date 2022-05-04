@@ -19,7 +19,6 @@ function App() {
     .then((data) =>{
       setPlaces(data);
       console.log(data)
-
     })
 
   }, [locations]);
