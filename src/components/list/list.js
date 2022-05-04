@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import PlaceDetail from "../placeDetails/PlaceDetails"
 const List = () => {
     const [type, setType] = useState("restaurants");
     const [rating, setRating] = useState("");
@@ -8,7 +8,11 @@ const List = () => {
         { name: 'cool place'},
         { name: 'betst food'},
         { name: ' perfect place'},
-        { name: 'wondefull place'}
+        { name: 'wondefull place'},
+        { name: 'cool place'},
+        { name: 'betst food'},
+        { name: ' perfect place'},
+        { name: 'wondefull place'},
     ]
     return (
       <div className="list-container">
@@ -28,6 +32,12 @@ const List = () => {
             <menuItem value={'4.5'}> Above 4.5</menuItem>
           </select>
         </form>
+        <div className="list">
+            {places?.map((place,i) => (
+                <PlaceDetail place={place}/>
+            ))}
+
+        </div>
       </div>
     );
   };
