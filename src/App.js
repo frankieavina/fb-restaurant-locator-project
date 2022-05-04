@@ -16,7 +16,14 @@ function App() {
     <div className="App">
       
       {/* providing context  */}
-      <LocationContext.Provider value={{locations:locations}}>
+      <LocationContext.Provider 
+        value={{
+          locations:locations,
+          setLocationSearch:(searchLocation) => {
+              setLocations(searchLocation);
+          },
+        }}
+      >
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>} />

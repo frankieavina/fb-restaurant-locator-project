@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
+// importing Context (location context)
+import LocationContext from "../../context/LocationContext";
 
 const HeaderWrapper = styled.header`
   align-items:flex-start;
@@ -33,14 +35,18 @@ const HeaderWrapper = styled.header`
   `;
 
 const Header = () => {
-  const [restaurantName, setRestaurantName] = useState('')
-  const handleClick =(restaurantName) => {
-    console.log(``)
+
+  // consuming or using location context 
+  const { setLocationSearch } = useContext(LocationContext)
+  const [locationName, setLocationName] = useState('')
+  const handleClick =(e) => {
+    e.preventDefault();
+    setLocationSearch(locationName);
   }
   
   return (
     < HeaderWrapper>
-      <h1>Restaurant Search {restaurantName}:</h1>
+      <h1>Location Search {locationName}:</h1>
 
       <div className="search-box">
         <input
@@ -48,10 +54,10 @@ const Header = () => {
           type="text"
           name=""
           value={restaurantName}
-          placeholder="Type to search....."
-          onChange={(e) => {setRestaurantName(e.target.value)}}
+          placeholder="Type to search location....."
+          onChange={(e) => {setLocationName(e.target.value)}}
         />
-        <button onClick={() => handleClick('')}>search</button>
+        <button onClick={handleClick}>Search</button>
       </div>
     </ HeaderWrapper>
   );
