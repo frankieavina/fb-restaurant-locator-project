@@ -1,17 +1,16 @@
-import React, {useContext} from "react";
+// import React, {useContext} from "react";
 // importing Context (location context)
-import LocationContext from "../../context/LocationContext";
+// import LocationContext from "../../context/LocationContext";
 
-const PlaceDetails = () =>{
+const PlaceDetails = ({place}) =>{
 
-    // consuming or using location context 
-    const {locations} = useContext(LocationContext)
+
 
     return(
         <div>
-            
+            <h1>{place.name}</h1>
         </div>
-    )
+    );
 
 }
 export default PlaceDetails;

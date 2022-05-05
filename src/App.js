@@ -1,22 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import LocationContext from './context/LocationContext';
 import {Routes,Route} from 'react-router-dom';
-import Home from './components/Home/Home';
+import Home from './components/Home/home';
 import PlaceDetails from './components/placeDetails/PlaceDetails'
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 
+import {getRestaurantData} from "./components/api/api-key";
+
 
 function App() {
 
-  const [locations, setLocations] = useState([]); 
+  const [locations, setLocations] = useState("Fresno, CA");
+  const [places, setPlaces] = useState ([]);
+  useEffect(() =>{
+    getRestaurantData(locations)
+    .then((data) =>{
+      setPlaces(data);
+      console.log(data)
+
+    })
+
+  }, [locations]);
 
   return (
     <div className="App">
       
       {/* providing context  */}
-      <LocationContext.Provider value={{locations:locations}}>
+      <LocationContext.Provider 
+        value={{
+          locations:locations,
+          restaurants: places,
+          setLocationSearch:(searchLocation) => {
+              setLocations(searchLocation);
+          },
+        }}
+      >
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>} />

@@ -1,19 +1,16 @@
-import React, {useState} from "react";
-import placeDetail from "../placeDetails/PlaceDetails"
-const List = () => {
-    const [type, setType] = useState("restaurants");
-    const [rating, setRating] = useState("");
+import React, {useState, useContext} from "react";
+import PlaceDetail from "../placeDetails/PlaceDetails"
+import LocationContext from "../../context/LocationContext";
 
-    const places = [
-        { name: 'cool place'},
-        { name: 'betst food'},
-        { name: ' perfect place'},
-        { name: 'wondefull place'},
-        { name: 'cool place'},
-        { name: 'betst food'},
-        { name: ' perfect place'},
-        { name: 'wondefull place'},
-    ]
+
+const List = () => {
+
+  // have locations(restaurants array) available to us in the list component
+  const { restaurants } = useContext(LocationContext);
+
+  const [type, setType] = useState("restaurants");
+  const [rating, setRating] = useState("");
+
     return (
       <div className="list-container">
         <h3>Restaurants</h3>
