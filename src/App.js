@@ -21,19 +21,24 @@ function App() {
 
     getCoordinates(locations)
       .then((results)=>{
+
+        getRestaurantData({ lat: results.data[0].lat , long: results.data[0].lon })
+        .then((data) =>{
+          setPlaces(data);
+          console.log(data);
+        });
+
         console.log("Area",results.data[0])
         setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
+        
       });
-    
 
-    getRestaurantData(coordinates)
-      .then((data) =>{
-        setPlaces(data);
-        console.log(data);
-      });
 
 
   }, [locations]);
+
+
+
 
   return (
     <div className="App">

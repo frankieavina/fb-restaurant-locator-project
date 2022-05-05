@@ -17,16 +17,12 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true,
 };
-// const center = {
-//     lat: 43.6532,
-//     lng: -79.3832,
-// };
 const libraries = ['places'];
 
 
 
 const Map = () =>{
-
+ 
     // importing context to use coordinates and restaurants
     const { restaurants, coordinates, locations } = useContext(LocationContext);
 
@@ -36,11 +32,14 @@ const Map = () =>{
     const [selected, setSelected] = useState(null);
     const [center, setCenter] = useState();
 
+
+    // useContext locations changes but doesn't run useEffect right away. Its a step behind. If i dont use a 
+    // useEffect I get stuck in an infinite re-render loop 
     useEffect(() =>{
         const lat = parseFloat(coordinates.lat,10);
         const lng = parseFloat(coordinates.long,10);
         setCenter({lat:lat, lng:lng})
-      }, []);
+      }, [locations]); 
 
 
     // google maps hook the loads the google pai script 
