@@ -1,9 +1,12 @@
 import React, {useState, useContext} from "react";
-import PlaceDetail from "../placeDetails/PlaceDetails"
 import LocationContext from "../../context/LocationContext";
+import { useNavigate } from "react-router-dom";
 
 
 const List = () => {
+
+  //navigate to different page with Router useNavigate
+  const navigate = useNavigate(); 
 
   // have locations(restaurants array) available to us in the list component
   const { restaurants } = useContext(LocationContext);
@@ -31,7 +34,7 @@ const List = () => {
         </form>
         <div className="list">
             {restaurants?.map((data) => (
-                <PlaceDetail place={data}/>
+                <PlaceDetail place={data} onClick={() => navigate(`/place-details/${parseInt(restaurants.location_id)}`)}/>
             ))}
 
         </div>
