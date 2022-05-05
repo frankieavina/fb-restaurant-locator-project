@@ -32,14 +32,14 @@ const Map = () =>{
     const [selected, setSelected] = useState(null);
     const [center, setCenter] = useState();
 
-
-    // useContext locations changes but doesn't run useEffect right away. Its a step behind. If i dont use a 
-    // useEffect I get stuck in an infinite re-render loop 
     useEffect(() =>{
+        //setting the center
         const lat = parseFloat(coordinates.lat,10);
         const lng = parseFloat(coordinates.long,10);
         setCenter({lat:lat, lng:lng})
-      }, [locations]); 
+        //setting the markers 
+        setMarkers(restaurants) 
+      }, [locations,coordinates,restaurants]); 
 
 
     // google maps hook the loads the google pai script 
@@ -70,7 +70,7 @@ const Map = () =>{
     // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
-    console.log("Center:",center); 
+    //console.log("Center:",center);  
      
      
 
@@ -79,27 +79,27 @@ const Map = () =>{
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={13}
+                zoom={16}
                 center={center}
                 options={options}
-                onClick={onMapClick}
+                onClick={onMapClick} 
                 onLoad={onMapLoad}
             > 
                 {markers.map((marker) => (
                     <Marker 
-                        key={marker.time.toISOString()} 
-                        position={{lat:marker.lat, lng:marker.lng}}
-                        onClick={() =>{
-                            setSelected(marker);
-                        }}
+                        key={marker.name} 
+                        position={{lat: parseFloat(marker.latitude,10), lng: parseFloat(marker.longitude,10)}}
+                        // onClick={() =>{
+                        //     setSelected(marker);
+                        // }}
                     /> 
                 ))}
-                {selected  ?(<InfoWindow position={{lat:selected.lat, lng: selected.lng}} onCloseClick={()=>{setSelected(null);}}>
+                {/* {selected  ?(<InfoWindow position={{lat:selected.lat, lng: selected.lng}} onCloseClick={()=>{setSelected(null);}}>
                     <div>
                         <h2> Restaurant Selected</h2>
                         <p> Lat:{selected.lat} Lng:{selected.lng} </p>
                     </div>
-                </InfoWindow>) : null}
+                </InfoWindow>) : null} */}
             </GoogleMap>
         </div>
     )
