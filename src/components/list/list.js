@@ -33,8 +33,10 @@ const List = () => {
           </select>
         </form>
         <div className="list">
-            {places?.map((place,i) => (
+            {places?.map((place,id) => (
                 <placeDetails place={place}/>
+                // getting the restaurant information
+                
             ))}
 
         </div>
