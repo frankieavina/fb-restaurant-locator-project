@@ -6,6 +6,7 @@ import {
     InfoWindow
 } from '@react-google-maps/api'; 
 import LocationContext from '../../context/LocationContext';
+import mapStyles from "./mapStyles";
  
 
 // initializing some variable 
@@ -14,6 +15,7 @@ const mapContainerStyle = {
     width: "100vw",
 };
 const options = {
+    styles: mapStyles, 
     disableDefaultUI: true,
     zoomControl: true,
 };
@@ -62,10 +64,10 @@ const Map = () =>{
         mapRef.current = map;
     })
 
-    const panTo = useCallback(({lat,lng}) => {
-        mapRef.current.panTo({lat, lng});
-        mapRef.current.setZoom(14); 
-    })
+    // const panTo = useCallback(({lat,lng}) => {
+    //     mapRef.current.panTo({lat, lng});
+    //     mapRef.current.setZoom(14); 
+    // })
 
     // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
@@ -79,7 +81,7 @@ const Map = () =>{
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={16}
+                zoom={15}
                 center={center}
                 options={options}
                 onClick={onMapClick} 
@@ -87,19 +89,26 @@ const Map = () =>{
             > 
                 {markers.map((marker) => (
                     <Marker 
-                        key={marker.name} 
+                        key={marker.location_id} 
                         position={{lat: parseFloat(marker.latitude,10), lng: parseFloat(marker.longitude,10)}}
-                        // onClick={() =>{
-                        //     setSelected(marker);
+                        // icon={{
+                        //     url:'../../../public/bear.svg',
+                        //     scaledSized: new window.google.maps.Point(30,30),
+                        //     origin: new window.google.maps.Point(0,0),
+                        //     anchor: new window.google.maps.Point(15,15),
                         // }}
+                        onClick={() =>{
+                            setSelected(marker);
+                        }}
                     /> 
                 ))}
-                {/* {selected  ?(<InfoWindow position={{lat:selected.lat, lng: selected.lng}} onCloseClick={()=>{setSelected(null);}}>
+                {selected  ?(<InfoWindow position={{lat: parseFloat(selected.latitude,10), lng: parseFloat(selected.longitude,10)}} onCloseClick={()=>{setSelected(null);}}>
                     <div>
-                        <h2> Restaurant Selected</h2>
-                        <p> Lat:{selected.lat} Lng:{selected.lng} </p>
+                        <h2>{selected.name}</h2>
+                        <p> Address:{selected.address_obj.street1} {selected.address_obj.city}, {selected.address_obj.state}</p>
+                        <p> Phone Number: {selected.phone}</p>
                     </div>
-                </InfoWindow>) : null} */}
+                </InfoWindow>) : null}
             </GoogleMap>
         </div>
     )
