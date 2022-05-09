@@ -5,19 +5,19 @@ import Map from '../map/Map';
 
 import styled from "styled-components";
   
-const HomeWrapper = styled.div`
+const HomeWrapper = styled.section`
   display:flex; 
-  flex-direction:column;
+  flex-direction:row;
   background-color:white;   
   flex-wrap:wrap;
   /* justify-content:space-evenly; */
-   `;
+   `
 
 function Home() {
   return (
     <HomeWrapper >
-    <List /> 
-    <Map/>    
+      <List /> 
+      <Map/>    
     </HomeWrapper>
   )
 }

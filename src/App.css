@@ -1,3 +1,12 @@
 .App {
   background-color:grey;
 }
+
+.details-page{
+  background-color: gray;
+  height: 80vh;
+}
+
+form:hover{
+  cursor: pointer; 
+}

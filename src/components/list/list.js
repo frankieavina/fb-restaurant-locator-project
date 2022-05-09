@@ -1,6 +1,6 @@
 import React, {useState, useContext} from "react";
-import PlaceDetail from "../placeDetails/PlaceDetails"
 import LocationContext from "../../context/LocationContext";
+import { useNavigate } from "react-router-dom";
 import ListCard from "./ListCard";
 import styled from "styled-components";
 const listsWrapper = styled.div`
@@ -9,20 +9,26 @@ const listsWrapper = styled.div`
 
 const List = () => {
 
+  //navigate to different page with Router useNavigate
+  const navigate = useNavigate(); 
+
   // have locations(restaurants array) available to us in the list component
   const { restaurants } = useContext(LocationContext);
+
 
     return (
       <listsWrapper>
         <h3>Restaurants</h3>
-        <div style ={{width:'40%'}}>
+        <div >
             {restaurants?.map((restaurant) => (
                 <ListCard  
                 name={restaurant.name} 
                 description={restaurant.description} 
                 rating={restaurant.rating}
                 phone={restaurant.phone} 
-                address={restaurant.address}/>
+                address={restaurant.address}
+                location_id={restaurant.location_id}
+                />
             ))}
 
         </div>
