@@ -1,18 +1,15 @@
 import {React, useCallback, useRef, useState} from 'react'; 
-
 import {
     GoogleMap,
     useLoadScript,
     Marker,
     InfoWindow
 } from '@react-google-maps/api'; 
- 
-
 // initializing some variable 
 const mapContainerStyle = {
     height: "100vh",
-    width: "100vw",
-};
+    width: "100vw",    
+};  
 const options = {
     disableDefaultUI: true,
     zoomControl: true,
@@ -22,8 +19,6 @@ const center = {
     lng: -79.3832,
 };
 const libraries = ['places'];
-
-
 
 const Map = () =>{
     // useStates
@@ -35,7 +30,6 @@ const Map = () =>{
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
         libraries
     });
-
 
     const onMapClick = useCallback((event) => {
         setMarkers(current => [...current, {
