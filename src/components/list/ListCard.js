@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import '../../App.css'; 
 
 const ListCardWrapper = styled.div`
   /* display:flex;  */
@@ -22,15 +24,24 @@ const ListCardWrapper = styled.div`
  }
 
    `;
-function ListCard({name, description, rating, phone, address}) {
+function ListCard({name, description, rating, phone, address,location_id}) {
+
+
+  //navigate to different page with Router useNavigate
+  const navigate = useNavigate(); 
+
+  const onHandleClick = () => {
+    navigate(`/place-details/${parseInt(location_id)}`);
+  }
+
+
   return (
-    <ListCardWrapper>
+    <ListCardWrapper onClick={onHandleClick}>
         <form>
           <inputLabel>{name}</inputLabel>
           <p>{rating}</p>
           <p>{phone}</p>
           <p>{address}</p>
-          {/* <p>{description}</p> */}
         </form>
     </ListCardWrapper>
   )

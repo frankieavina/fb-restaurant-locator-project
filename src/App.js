@@ -41,7 +41,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>} />
-            <Route path="placedetails/:id" element={<PlaceDetails/>} />
+            <Route path="place-details/:id" element={<PlaceDetails/>} />
             <Route path="*" element={<NotFound />} />
           </Route>          
         </Routes>
