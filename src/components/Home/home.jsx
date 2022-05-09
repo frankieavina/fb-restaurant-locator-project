@@ -7,10 +7,10 @@ import styled from "styled-components";
   
 const homeWrapper = styled.div`
   display:flex; 
-  flex-direction:row;
+  flex-direction:column;
   background-color:white;   
   flex-wrap:wrap;
-  justify-content:space-evenly;
+  /* justify-content:space-evenly; */
    `;
 
 function Home() {

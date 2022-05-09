@@ -2,7 +2,10 @@ import React, {useState, useContext} from "react";
 import PlaceDetail from "../placeDetails/PlaceDetails"
 import LocationContext from "../../context/LocationContext";
 import ListCard from "./ListCard";
-
+import styled from "styled-components";
+const listsWrapper = styled.div`
+  width:40%;
+   `;
 
 const List = () => {
 
@@ -10,9 +13,9 @@ const List = () => {
   const { restaurants } = useContext(LocationContext);
 
     return (
-      <div className="list-container">
+      <listsWrapper>
         <h3>Restaurants</h3>
-        <div className="list">
+        <div style ={{width:'40%'}}>
             {restaurants?.map((restaurant) => (
                 <ListCard  
                 name={restaurant.name} 
@@ -23,7 +26,7 @@ const List = () => {
             ))}
 
         </div>
-      </div>
+      </listsWrapper>
     );
   };
     

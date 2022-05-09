@@ -7,15 +7,17 @@ const ListCardWrapper = styled.div`
   border: 2px solid #666;
   float:right; */
   padding-left:40px;
+  width:40%;
  form{
-  /* display:flex; */
-  display: inline-block;
+  display:flex;
+  /* display: inline-block; */
   align-self:flex-end;
   flex-direction:column;
   background-color:white;   
   border: 1px solid #666;
   border-radius: 5px; 
   flex-wrap:wrap;
+  /* width:40%; */
   
  }
 

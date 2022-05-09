@@ -7,8 +7,8 @@ import {
 } from '@react-google-maps/api'; 
 // initializing some variable 
 const mapContainerStyle = {
-    height: "100vh",
-    width: "100vw",    
+    height: "50vh",
+    width: "50vw",    
 };  
 const options = {
     disableDefaultUI: true,
@@ -51,7 +51,7 @@ const Map = () =>{
      
 
     return(
-        <div>
+        <div style ={{width:'40%'}}>
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
