@@ -5,7 +5,7 @@ import Map from '../map/Map';
 
 import styled from "styled-components";
   
-const homeWrapper = styled.div`
+const HomeWrapper = styled.div`
   display:flex; 
   flex-direction:column;
   background-color:white;   
@@ -15,10 +15,10 @@ const homeWrapper = styled.div`
 
 function Home() {
   return (
-    <homeWrapper >
+    <HomeWrapper >
     <List /> 
     <Map/>    
-    </homeWrapper>
+    </HomeWrapper>
   )
 }
 
