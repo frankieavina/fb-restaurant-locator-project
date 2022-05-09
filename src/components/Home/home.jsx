@@ -10,7 +10,7 @@ const HomeWrapper = styled.section`
   flex-direction:row;
   background-color:white;   
   flex-wrap:wrap;
-  /* justify-content:space-evenly; */
+  justify-content:space-evenly;
    `
 
 function Home() {

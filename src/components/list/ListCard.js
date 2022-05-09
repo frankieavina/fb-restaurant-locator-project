@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import '../../App.css'; 
+
 
 const ListCardWrapper = styled.div`
   /* display:flex;  */
@@ -9,7 +9,7 @@ const ListCardWrapper = styled.div`
   border: 2px solid #666;
   float:right; */
   padding-left:40px;
-  width:40%;
+
  form{
   display:flex;
   /* display: inline-block; */
@@ -21,6 +21,10 @@ const ListCardWrapper = styled.div`
   flex-wrap:wrap;
   /* width:40%; */
   
+ }
+
+ form:hover{
+   cursor:pointer; 
  }
 
    `;
