@@ -12,6 +12,7 @@ const List = () => {
   // have locations(restaurants array) available to us in the list component
   const { restaurants } = useContext(LocationContext);
 
+
     return (
       <div className="list-container">
         <h3>Restaurants</h3>
@@ -23,7 +24,7 @@ const List = () => {
                 rating={restaurant.rating}
                 phone={restaurant.phone} 
                 address={restaurant.address}
-                onClick={() => navigate(`/place-details/${parseInt(restaurants.location_id)}`)}
+                location_id={restaurant.location_id}
                 />
             ))}
 

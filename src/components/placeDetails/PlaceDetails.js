@@ -13,20 +13,20 @@ padding: 1.5rem;
 
 const PlaceDetails = () =>{
 
-    const isOpen = 'Open'; 
-    const { restId } = useParams();
+    let isOpen = 'Open'; 
+    const { id: restId } = useParams();
     const { restaurants } = useContext(LocationContext); 
     
-    // return the object of the restaurant whos id matches with the param id (eg.place-details/819237)
-    const restaurant =  restaurants.find((data)=>{ return data.location_id == restId})
-
+    console.log('rest id:', restId)
+    // return the object of the restaurant who's id matches with the param id (eg.place-details/819237)
+    const restaurant =  restaurants.find(({location_id}) =>  location_id == restId ); 
     // is restaurant open 
     ( !restaurant.is_closed )?( isOpen = 'Open'):( isOpen = 'Closed');
 
     return(
         <RestaurantCard>
             <div>
-                <img src={restaurant.photo.images.large.url} alt="Picture of Restaurant"/>
+                <img src={restaurant.photo?.images.large.url} alt="Picture of Restaurant"/>
             </div>
             <div>
                 <h1>{restaurant.name}</h1>
