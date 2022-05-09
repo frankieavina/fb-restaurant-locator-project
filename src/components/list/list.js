@@ -15,7 +15,7 @@ const List = () => {
     return (
       <listsWrapper>
         <h3>Restaurants</h3>
-        <div style ={{width:'40%'}}>
+        <div >
             {restaurants?.map((restaurant) => (
                 <ListCard  
                 name={restaurant.name} 

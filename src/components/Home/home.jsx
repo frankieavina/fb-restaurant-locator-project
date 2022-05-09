@@ -5,20 +5,20 @@ import Map from '../map/Map';
 
 import styled from "styled-components";
   
-const homeWrapper = styled.div`
+const HomeWrapper = styled.section`
   display:flex; 
-  flex-direction:column;
+  flex-direction:row;
   background-color:white;   
   flex-wrap:wrap;
   /* justify-content:space-evenly; */
-   `;
+   `
 
 function Home() {
   return (
-    <homeWrapper >
-    <List /> 
-    <Map/>    
-    </homeWrapper>
+    <HomeWrapper >
+      <List /> 
+      <Map/>    
+    </HomeWrapper>
   )
 }
 
