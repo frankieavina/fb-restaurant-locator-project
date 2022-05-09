@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import {getRestaurantData} from "./components/api/api-key";
 
 
+
 function App() {
 
   const [locations, setLocations] = useState("Fresno, CA");
