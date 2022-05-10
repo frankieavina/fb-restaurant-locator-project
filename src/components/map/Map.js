@@ -28,7 +28,7 @@ const libraries = ['places'];
 const Map = () =>{
  
     // importing context to use coordinates and restaurants
-    const { restaurants, coordinates, locations } = useContext(LocationContext);
+    const { restaurants, coordinates, locations, backHome } = useContext(LocationContext);
 
     // useStates
     // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
@@ -42,7 +42,7 @@ const Map = () =>{
         const lng = parseFloat(coordinates.long,10);
         setCenter({lat:lat, lng:lng})
         //setting the markers 
-        setMarkers(restaurants) 
+        setMarkers(restaurants)
       }, [locations,coordinates,restaurants]); 
 
 
@@ -96,12 +96,6 @@ const Map = () =>{
                     <Marker 
                         key={marker.location_id} 
                         position={{lat: parseFloat(marker.latitude,10), lng: parseFloat(marker.longitude,10)}}
-                        // icon={{
-                        //     url:'../../bear.svg',
-                        //     scaledSized: new window.google.maps.Point(30,30),
-                        //     origin: new window.google.maps.Point(0,0),
-                        //     anchor: new window.google.maps.Point(15,15),
-                        // }}
                         onClick={() =>{
                             setSelected(marker);
                         }}
