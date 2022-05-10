@@ -34,10 +34,10 @@ const Layout = () => {
   return (
     <>
       <GlobalStyle />
-      <Wrapper>
-        <Header />
-        <Outlet />
-        <Footer />
+      <Wrapper className='wrapper'>
+        <Header className='header'/>
+        <Outlet className='outlet' />
+        <Footer className='footer'/>
       </Wrapper>
     </>
   );
