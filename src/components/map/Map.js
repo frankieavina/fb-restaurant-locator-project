@@ -51,7 +51,7 @@ const Map = () =>{
      
 
     return(
-        <div style ={{width:'40%'}}>
+        <div>
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
