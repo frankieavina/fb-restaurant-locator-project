@@ -19,6 +19,7 @@ background-color: white;
 display: flex; 
 width: 90%; 
 margin: 2rem auto;
+justify-content: space-around; 
 
 
 a{
@@ -41,7 +42,7 @@ a:hover{
     color: light-gray; 
 }
 img{
-    width:300px;
+    width:500px;
     height:350px; 
     margin: 1rem;
 }
