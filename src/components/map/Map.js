@@ -1,4 +1,5 @@
 import {React, useCallback, useRef, useState, useContext, useEffect} from 'react'; 
+import { useNavigate } from "react-router-dom";
 import {
     GoogleMap,
     useLoadScript,
@@ -7,7 +8,8 @@ import {
 } from '@react-google-maps/api'; 
 import LocationContext from '../../context/LocationContext';
 import mapStyles from "./mapStyles";
- 
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import '../../App.css'
 
 // initializing some variable 
 const mapContainerStyle = {
@@ -50,6 +52,8 @@ const Map = () =>{
         libraries
     });
 
+    //navigate to different page with Router useNavigate
+    const navigate = useNavigate(); 
 
     const onMapClick = useCallback((event) => {
         setMarkers(current => [...current, {
@@ -64,6 +68,10 @@ const Map = () =>{
         mapRef.current = map;
     })
 
+    const onSelectRest = (id) =>{
+        navigate(`/place-details/${parseInt(id)}`);
+    }
+
     // const panTo = useCallback(({lat,lng}) => {
     //     mapRef.current.panTo({lat, lng});
     //     mapRef.current.setZoom(14); 
@@ -72,16 +80,13 @@ const Map = () =>{
     // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
-    //console.log("Center:",center);  
-     
-     
 
     return(
         <div>
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={15}
+                zoom={15.25}
                 center={center}
                 options={options}
                 onClick={onMapClick} 
@@ -92,7 +97,7 @@ const Map = () =>{
                         key={marker.location_id} 
                         position={{lat: parseFloat(marker.latitude,10), lng: parseFloat(marker.longitude,10)}}
                         // icon={{
-                        //     url:'../../../public/bear.svg',
+                        //     url:'../../bear.svg',
                         //     scaledSized: new window.google.maps.Point(30,30),
                         //     origin: new window.google.maps.Point(0,0),
                         //     anchor: new window.google.maps.Point(15,15),
@@ -102,13 +107,21 @@ const Map = () =>{
                         }}
                     /> 
                 ))}
-                {selected  ?(<InfoWindow position={{lat: parseFloat(selected.latitude,10), lng: parseFloat(selected.longitude,10)}} onCloseClick={()=>{setSelected(null);}}>
-                    <div>
-                        <h2>{selected.name}</h2>
-                        <p> Address:{selected.address_obj.street1} {selected.address_obj.city}, {selected.address_obj.state}</p>
-                        <p> Phone Number: {selected.phone}</p>
-                    </div>
-                </InfoWindow>) : null}
+                {selected  ?(
+                    <InfoWindow 
+                        position={{lat: parseFloat(selected.latitude,10), lng: parseFloat(selected.longitude,10)}} 
+                        onCloseClick={()=>{setSelected(null);}}>
+                        <div>
+                            <div className='restName' onClick={() => onSelectRest(selected.location_id)}>
+                                <h2>{selected.name}</h2>
+                            </div>
+                            <p> Address:{selected.address_obj.street1} {selected.address_obj.city}, {selected.address_obj.state}</p>
+                            <p> Phone Number: {selected.phone}</p>
+                        </div>
+                    </InfoWindow>
+                ) : 
+                    null
+                }
             </GoogleMap>
         </div>
     )
