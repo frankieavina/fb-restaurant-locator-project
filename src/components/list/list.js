@@ -3,7 +3,8 @@ import LocationContext from "../../context/LocationContext";
 import { useNavigate } from "react-router-dom";
 import ListCard from "./ListCard";
 import styled from "styled-components";
-const listsWrapper = styled.div`
+const ListWrapper = styled.div`
+  border: 2px solid #666;
   width:40%;
    `;
 
@@ -17,7 +18,7 @@ const List = () => {
 
 
     return (
-      <listsWrapper>
+      <ListWrapper>
         <h3>Restaurants</h3>
         <div >
             {restaurants?.map((restaurant) => (
@@ -32,7 +33,7 @@ const List = () => {
             ))}
 
         </div>
-      </listsWrapper>
+      </ListWrapper>
     );
   };
     

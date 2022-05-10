@@ -6,7 +6,8 @@ import Map from '../map/Map';
 import styled from "styled-components";
   
 const HomeWrapper = styled.section`
-  display:flex; 
+  display:flex;
+  border: 1px solid #666; 
   flex-direction:row;
   background-color:white;   
   flex-wrap:wrap;
@@ -16,8 +17,8 @@ const HomeWrapper = styled.section`
 function Home() {
   return (
     <HomeWrapper >
-      <List /> 
-      <Map/>    
+      <Map/>
+      <List />           
     </HomeWrapper>
   )
 }
