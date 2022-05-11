@@ -84,6 +84,10 @@ const PlaceDetails = () =>{
     // is restaurant open 
     ( !restaurant.is_closed )?( isOpen = 'OPEN'):( isOpen = 'CLOSED');
 
+    const onGoHome = () =>{
+        navigate('/');
+    }
+
     return(
         <div className="details-page">
             <RestaurantCard>
@@ -91,7 +95,7 @@ const PlaceDetails = () =>{
                     <img src={restaurant.photo?.images.large.url} alt='Picture for Restaurant Not Available'/>
                 </div>
                 <div className="details-info">
-                    <div className='back-home' onClick={() => navigate(`/`)}>
+                    <div className='back-home' onClick={onGoHome}>
                         <p><span className="icon"><ArrowBackIcon/></span>back to home</p>
                     </div>
                     <h3>{restaurant.name}</h3>

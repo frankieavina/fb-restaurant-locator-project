@@ -8,21 +8,37 @@ import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 
 import {getRestaurantData} from "./components/api/api-key";
+import { getCoordinates } from './components/api/getCoords';
 
 
 function App() {
 
   const [locations, setLocations] = useState("Fresno, CA");
   const [places, setPlaces] = useState ([]);
-  useEffect(() =>{
-    getRestaurantData(locations)
-    .then((data) =>{
-      setPlaces(data);
-      console.log(data)
+  const [coordinates, setCoordinates] = useState({lat:"36.7394421" , long:"-119.7848307" });
 
-    })
+  useEffect(() =>{
+
+    getCoordinates(locations)
+      .then((results)=>{
+
+        getRestaurantData({ lat: results.data[0].lat , long: results.data[0].lon })
+        .then((data) =>{
+          setPlaces(data);
+          //console.log(data);
+        });
+
+        //console.log("Area",results.data[0]) 
+        setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
+        
+      });
+
+
 
   }, [locations]);
+
+
+
 
   return (
     <div className="App">
@@ -32,6 +48,7 @@ function App() {
         value={{
           locations:locations,
           restaurants: places,
+          coordinates: coordinates,
           setLocationSearch:(searchLocation) => {
               setLocations(searchLocation);
           },

@@ -23,12 +23,10 @@ const options = {
 };
 
 
- export const getRestaurantData = async (location) => {
+ export const getRestaurantData = async ({lat, long}) => {
     try{
-        const results = await axios.get(`https://geocode.maps.co/search?q=${location}`);
-        // console.log(results.data[0].lat, results.data[0].lon);
-        options.params.latitude = results.data[0].lat;
-        options.params.longitude = results.data[0].lon; 
+        options.params.latitude = lat;
+        options.params.longitude = long; 
         const {data:{data}} = await axios.get(URL, options);
         return data;
     } catch (error) {
