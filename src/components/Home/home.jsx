@@ -9,10 +9,11 @@ const HomeWrapper = styled.section`
   display:flex;
   /* justify-content: center; */
   align-items: center;
-  border: 3px solid #666; 
+  border: 1px solid #666; 
   flex-direction:row;
   background-color:grey;   
   flex-wrap:wrap;
+  padding-bottom:10px;
   /* justify-content:space-evenly; */
    `;
 

@@ -40,6 +40,7 @@ function ListCard({name, description, rating, phone, address,location_id}) {
           <p>{rating}</p>
           <p>{phone}</p>
           <p>{address}</p>
+          <p>{description}</p>
         </form>
     </ListCardWrapper>
   )

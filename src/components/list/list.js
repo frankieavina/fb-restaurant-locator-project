@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ListCard from "./ListCard";
 import styled from "styled-components";
 const ListWrapper = styled.div`  
-  border: 2px solid #666;
+  border: 1px solid #666;
   width:40%;
   height:80vh;
   flex-wrap:wrap; 
