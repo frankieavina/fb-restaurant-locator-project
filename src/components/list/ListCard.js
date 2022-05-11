@@ -7,11 +7,11 @@ const ListCardWrapper = styled.div`
 
  form{
   display:flex;
-  align-self:flex-end;
+  align-self:flex-start;
   flex-direction:column;
   background-color:white;   
   border: 1px solid #666;
-  border-radius: 5px; 
+  /* border-radius: 5px;  */
   flex-wrap:wrap;  
  }
 
@@ -40,6 +40,7 @@ function ListCard({name, description, rating, phone, address,location_id}) {
           <p>{rating}</p>
           <p>{phone}</p>
           <p>{address}</p>
+          <p>{description}</p>
         </form>
     </ListCardWrapper>
   )
