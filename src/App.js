@@ -6,35 +6,60 @@ import Home from './components/Home/home';
 import PlaceDetails from './components/placeDetails/PlaceDetails'
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
-
 import {getRestaurantData} from "./components/api/api-key";
-import { getCoordinates } from './components/api/getCoords';
-
+import { getCoordinates , getLocation} from './components/api/getCoords';
 
 
 function App() {
 
-  const [locations, setLocations] = useState("Fresno, CA");
+  const [locations, setLocations] = useState('');
   const [places, setPlaces] = useState ([]);
-  const [coordinates, setCoordinates] = useState({lat:"36.7394421" , long:"-119.7848307" });
+  const [coordinates, setCoordinates] = useState();
+  const [ isCurrExist, setIsCurrExist ] = useState(false); 
 
+  if (navigator.geolocation) { 
+          getLocation()
+            .then((results) =>{
+              setLocations(results[0]);
+              setCoordinates(results[1]);
+            });  
+        }
+  
+  else{
+      alert("Cannot verify/locate users location. Will use default Location of Fresno, CA.")
+      setCoordinates({lat:"36.7394421" , long:"-119.7848307" }); 
+      setLocations('Fresno, CA');
+  }
+
+  
+// on run on initialization to set current users location 
+  // useEffect(() => { 
+  //   if (navigator.geolocation) { 
+  //         getLocation()
+  //           .then((results) =>{
+  //             setLocations(results[0]);
+  //             setCoordinates(results[1]);
+  //           });  
+  //       }
+  
+  //   else{
+  //     alert("Cannot verify/locate users location. Will use default Location of Fresno, CA.")
+  //     setCoordinates({lat:"36.7394421" , long:"-119.7848307" }); 
+  //     setLocations('Fresno, CA');
+  //   }
+  // },[])
+
+// run on every change to location 
   useEffect(() =>{
+      getCoordinates(locations)
+        .then((results)=>{
 
-    getCoordinates(locations)
-      .then((results)=>{
-
-        getRestaurantData({ lat: results.data[0].lat , long: results.data[0].lon })
-        .then((data) =>{
-          setPlaces(data);
-          //console.log(data);
+          getRestaurantData({ lat: results.data[0].lat , long: results.data[0].lon })
+          .then((data) =>{
+            setPlaces(data);
+          }); 
+          setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
         });
-
-        //console.log("Area",results.data[0]) 
-        setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
-        
-      });
-
-
 
   }, [locations]);
 

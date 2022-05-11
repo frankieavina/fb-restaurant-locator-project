@@ -65,14 +65,24 @@ const Map = () =>{
         }])
     },[])
 
-    const mapRef = useRef(); 
-    const onMapLoad = useCallback((map) => {
-        mapRef.current = map;
-    })
+
+    // two variable. One is retains a ref to the map itself(map instance) to 
+    // programmatically move where the map is. The call back function will be
+    // passed in when the map loads( onLoad() ) and then passes the map instance that gives 
+    // us the map which we can then assign to the ref.----// used ref to reference to 
+    // the map without changing the state of map
+    // can be used to later pan to a different spot or locate where user is 
+    // and not change the state of map. ( used for LocateMe and Search function 
+    // if I corporate it in this application which I haven't yet) //------
+    // const mapRef = useRef(); 
+    // const onMapLoad = useCallback((map) => {
+    //     mapRef.current = map;
+    // })
 
     const onSelectRest = (id) =>{
         navigate(`/place-details/${parseInt(id)}`);
     }
+
 
     // const panTo = useCallback(({lat,lng}) => {
     //     mapRef.current.panTo({lat, lng});
@@ -92,7 +102,8 @@ const Map = () =>{
                 center={center}
                 options={options}
                 onClick={onMapClick} 
-                onLoad={onMapLoad}
+                // onLoad={onMapLoad} ---This callback is called when 
+                //the map instance has loaded. It is called with the map instance.
             > 
                 {markers.map((marker) => (
                     <Marker 
