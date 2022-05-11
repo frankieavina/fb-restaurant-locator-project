@@ -9,11 +9,12 @@ const HomeWrapper = styled.section`
   display:flex;
   /* justify-content: center; */
   align-items: center;
-  border: 3px solid #666; 
+  border: 1px solid #666; 
   flex-direction:row;
-  background-color:white;   
+  background-color:grey;   
   flex-wrap:wrap;
-  justify-content:space-evenly;
+  padding-bottom:10px;
+  /* justify-content:space-evenly; */
    `;
 
 function Home() {
