@@ -6,6 +6,9 @@ const FooterWrapper = styled.footer`
   color: #fefefe;
   padding: 1rem 0;
   text-align: center;
+  position:fixed;
+  bottom:0;
+  width: 100%; 
 `;
 
 const Footer = () => {

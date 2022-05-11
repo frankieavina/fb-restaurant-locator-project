@@ -1,10 +1,15 @@
-import {React, useCallback, useRef, useState} from 'react'; 
+import {React, useCallback, useRef, useState, useContext, useEffect} from 'react'; 
+import { useNavigate } from "react-router-dom";
 import {
     GoogleMap,
     useLoadScript,
     Marker,
     InfoWindow
 } from '@react-google-maps/api'; 
+import LocationContext from '../../context/LocationContext';
+import mapStyles from "./mapStyles";
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import '../../App.css'
 
 import styled from "styled-components";
 const MapWrapper = styled.div`
@@ -16,25 +21,41 @@ const mapContainerStyle = {
     width: "50vw",    
 };  
 const options = {
+    styles: mapStyles, 
     disableDefaultUI: true,
     zoomControl: true,
-};
-const center = {
-    lat: 43.6532,
-    lng: -79.3832,
 };
 const libraries = ['places'];
 
 const Map = () =>{
+ 
+    // importing context to use coordinates and restaurants
+    const { restaurants, coordinates, locations, backHome } = useContext(LocationContext);
+
     // useStates
     // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
+    const [center, setCenter] = useState();
+
+    useEffect(() =>{
+        //setting the center
+        const lat = parseFloat(coordinates.lat,10);
+        const lng = parseFloat(coordinates.long,10);
+        setCenter({lat:lat, lng:lng})
+        //setting the markers 
+        setMarkers(restaurants)
+      }, [locations,coordinates,restaurants]); 
+
+
     // google maps hook the loads the google pai script 
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
         libraries
     });
+
+    //navigate to different page with Router useNavigate
+    const navigate = useNavigate(); 
 
     const onMapClick = useCallback((event) => {
         setMarkers(current => [...current, {
@@ -49,38 +70,54 @@ const Map = () =>{
         mapRef.current = map;
     })
 
+    const onSelectRest = (id) =>{
+        navigate(`/place-details/${parseInt(id)}`);
+    }
+
+    // const panTo = useCallback(({lat,lng}) => {
+    //     mapRef.current.panTo({lat, lng});
+    //     mapRef.current.setZoom(14); 
+    // })
+
     // check if theres and error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
-     
-     
 
     return(
         <MapWrapper>
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                zoom={8}
+                zoom={15.25}
                 center={center}
                 options={options}
-                onClick={onMapClick}
+                onClick={onMapClick} 
                 onLoad={onMapLoad}
             > 
                 {markers.map((marker) => (
                     <Marker 
-                        key={marker.time.toISOString()} 
-                        position={{lat:marker.lat, lng:marker.lng}}
+                        key={marker.location_id} 
+                        position={{lat: parseFloat(marker.latitude,10), lng: parseFloat(marker.longitude,10)}}
                         onClick={() =>{
                             setSelected(marker);
                         }}
                     /> 
                 ))}
-                {selected  ?(<InfoWindow position={{lat:selected.lat, lng: selected.lng}} onCloseClick={()=>{setSelected(null);}}>
-                    <div>
-                        <h2> Restaurant Selected</h2>
-                        <p> Lat:{selected.lat} Lng:{selected.lng} </p>
-                    </div>
-                </InfoWindow>) : null}
+                {selected  ?(
+                    <InfoWindow 
+                        position={{lat: parseFloat(selected.latitude,10), lng: parseFloat(selected.longitude,10)}} 
+                        onCloseClick={()=>{setSelected(null);}}>
+                        <div>
+                            <div className='restName' onClick={() => onSelectRest(selected.location_id)}>
+                                <h2>{selected.name}</h2>
+                            </div>
+                            <p> Address:{selected.address_obj.street1} {selected.address_obj.city}, {selected.address_obj.state}</p>
+                            <p> Phone Number: {selected.phone}</p>
+                        </div>
+                    </InfoWindow>
+                ) : 
+                    null
+                }
             </GoogleMap>
         </MapWrapper>
     )

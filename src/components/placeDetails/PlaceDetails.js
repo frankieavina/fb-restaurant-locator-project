@@ -18,6 +18,10 @@ padding: 1rem;
 background-color: white; 
 display: flex; 
 width: 90%; 
+margin: 2rem auto;
+justify-content: space-around; 
+
+
 a{
     color: blue;
     text-decoration: underline; 
@@ -38,7 +42,7 @@ a:hover{
     color: light-gray; 
 }
 img{
-    width:300px;
+    width:500px;
     height:350px; 
     margin: 1rem;
 }
@@ -80,6 +84,10 @@ const PlaceDetails = () =>{
     // is restaurant open 
     ( !restaurant.is_closed )?( isOpen = 'OPEN'):( isOpen = 'CLOSED');
 
+    const onGoHome = () =>{
+        navigate('/');
+    }
+
     return(
         <div className="details-page">
             <RestaurantCard>
@@ -87,7 +95,7 @@ const PlaceDetails = () =>{
                     <img src={restaurant.photo?.images.large.url} alt='Picture for Restaurant Not Available'/>
                 </div>
                 <div className="details-info">
-                    <div className='back-home' onClick={() => navigate(`/`)}>
+                    <div className='back-home' onClick={onGoHome}>
                         <p><span className="icon"><ArrowBackIcon/></span>back to home</p>
                     </div>
                     <h3>{restaurant.name}</h3>
