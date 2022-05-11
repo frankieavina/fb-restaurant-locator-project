@@ -83,7 +83,7 @@ const Map = () =>{
     //     mapRef.current.setZoom(14); 
     // })
 
-    // check if theres and error or if map is still loading 
+    // check if theres and  error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
 
