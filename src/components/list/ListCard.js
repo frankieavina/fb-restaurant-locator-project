@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const ListCardWrapper = styled.div`
-overflow-y: scroll;
+
  form{
   display:flex;
   align-self:flex-end;

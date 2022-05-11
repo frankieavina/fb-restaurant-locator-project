@@ -7,7 +7,7 @@ import styled from "styled-components";
   
 const HomeWrapper = styled.section`
   display:flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   border: 3px solid #666; 
   flex-direction:row;

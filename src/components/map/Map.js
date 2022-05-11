@@ -12,7 +12,7 @@ const MapWrapper = styled.div`
    `;
 // initializing some variable 
 const mapContainerStyle = {
-    height: "260vh",
+    height: "80vh",
     width: "50vw",    
 };  
 const options = {

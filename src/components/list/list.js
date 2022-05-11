@@ -6,9 +6,10 @@ import styled from "styled-components";
 const ListWrapper = styled.div`
   border: 2px solid #666;
   width:40%;
+  height:80vh;
   flex-wrap:wrap; 
   margin: 3rem auto; 
-  
+  overflow-y: scroll;
    `;
 
 const List = () => {
