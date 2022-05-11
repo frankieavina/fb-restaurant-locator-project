@@ -44,7 +44,7 @@ const Map = () =>{
         const lng = parseFloat(coordinates.long,10);
         setCenter({lat:lat, lng:lng})
         //setting the markers 
-        setMarkers(restaurants)
+        // setMarkers(restaurants)
       }, [locations,coordinates,restaurants]); 
 
 
@@ -53,6 +53,10 @@ const Map = () =>{
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY, 
         libraries
     });
+
+    useEffect(() => {
+        if(isLoaded) setMarkers(restaurants) ;
+    },[restaurants, isLoaded]);
 
     //navigate to different page with Router useNavigate
     const navigate = useNavigate(); 
@@ -89,7 +93,7 @@ const Map = () =>{
     //     mapRef.current.setZoom(14); 
     // })
 
-    // check if theres and error or if map is still loading 
+    // check if theres and  error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
 
