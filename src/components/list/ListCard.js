@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const ListCardWrapper = styled.div`
+overflow-y: scroll;
  form{
   display:flex;
   align-self:flex-end;
@@ -15,7 +16,9 @@ const ListCardWrapper = styled.div`
  }
 
  form:hover{
-   cursor:pointer; 
+   cursor:pointer;
+   background-color:lightblue; 
+   
  }
 
    `;

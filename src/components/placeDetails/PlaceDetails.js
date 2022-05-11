@@ -18,9 +18,6 @@ padding: 1rem;
 background-color: white; 
 display: flex; 
 width: 90%; 
-margin: 2rem auto;
-
-
 a{
     color: blue;
     text-decoration: underline; 

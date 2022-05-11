@@ -6,6 +6,9 @@ import styled from "styled-components";
 const ListWrapper = styled.div`
   border: 2px solid #666;
   width:40%;
+  flex-wrap:wrap; 
+  margin: 3rem auto; 
+  
    `;
 
 const List = () => {
@@ -19,7 +22,7 @@ const List = () => {
 
     return (
       <ListWrapper>
-        <h3>Restaurants</h3>
+        {/* <h3>Restaurants</h3> */}
         <div >
             {restaurants?.map((restaurant) => (
                 <ListCard  

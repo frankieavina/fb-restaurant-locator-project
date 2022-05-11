@@ -5,9 +5,14 @@ import {
     Marker,
     InfoWindow
 } from '@react-google-maps/api'; 
+
+import styled from "styled-components";
+const MapWrapper = styled.div`
+  border: 1px solid #666;  
+   `;
 // initializing some variable 
 const mapContainerStyle = {
-    height: "50vh",
+    height: "260vh",
     width: "50vw",    
 };  
 const options = {
@@ -51,7 +56,7 @@ const Map = () =>{
      
 
     return(
-        <div>
+        <MapWrapper>
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
@@ -77,7 +82,7 @@ const Map = () =>{
                     </div>
                 </InfoWindow>) : null}
             </GoogleMap>
-        </div>
+        </MapWrapper>
     )
 
 }
