@@ -11,6 +11,7 @@ import {getRestaurantData} from "./components/api/api-key";
 import { getCoordinates } from './components/api/getCoords';
 
 
+
 function App() {
 
   const [locations, setLocations] = useState("Fresno, CA");

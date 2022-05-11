@@ -11,19 +11,21 @@ import mapStyles from "./mapStyles";
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import '../../App.css'
 
+import styled from "styled-components";
+const MapWrapper = styled.div`
+  border: 1px solid #666;  
+   `;
 // initializing some variable 
 const mapContainerStyle = {
-    height: "100vh",
-    width: "100vw",
-};
+    height: "80vh",
+    width: "50vw",    
+};  
 const options = {
     styles: mapStyles, 
     disableDefaultUI: true,
     zoomControl: true,
 };
 const libraries = ['places'];
-
-
 
 const Map = () =>{
  
@@ -82,7 +84,7 @@ const Map = () =>{
     if (!isLoaded) return console.log("Loading Maps");
 
     return(
-        <div>
+        <MapWrapper>
             {/* The map component inside which all other components render */}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
@@ -117,7 +119,7 @@ const Map = () =>{
                     null
                 }
             </GoogleMap>
-        </div>
+        </MapWrapper>
     )
 
 }
