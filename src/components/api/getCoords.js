@@ -10,11 +10,11 @@ export const getCoordinates = async (location) => {
 }
 
 
-export const getLocation = async (lat, long) => {
+export const getLocation = async ({lat, lng}) => {
     try{
-        const results = await axios.get(`https://geocode.maps.co/reverse?lat=${lat}&lon=${long}`);
-        console.log(`${results.data.address.town},${results.data.address.state}`);
-        return (`${results.data.address.town},${results.data.address.state}`); 
+        const results = await axios.get(`https://geocode.maps.co/reverse?lat=${lat}&lon=${lng}`);
+        console.log(`TOWN and STATE:${results.data.address.town},${results.data.address.state}`);
+        return (`${results.data.address.town},${results.data.address.state}`);  
     } catch (error) {
         console.error(`Error: ${error}`)
     }

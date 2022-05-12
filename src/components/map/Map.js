@@ -10,11 +10,34 @@ import LocationContext from '../../context/LocationContext';
 import mapStyles from "./mapStyles";
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import '../../App.css'
-
 import styled from "styled-components";
+import ExploreIcon from '@material-ui/icons/Explore';
+
+
 const MapWrapper = styled.div`
-  border: 1px solid #666;  
+  border: 1px solid #666;
+  position: relative; 
+  .locateButton{
+    position: absolute; 
+    top: 1.5rem; 
+    right: 0.001rem; 
+    background: none;
+    border: none;
+    z-index: 10; 
+  }  
+  .locateButton:hover{
+    cursor: pointer; 
+  }
+  .exploreIcon:hover{  
+    color:cadetblue;
+    font-size: 4rem; 
+  }
+  .exploreIcon{
+    font-size: 3rem; 
+    color: rgb(59,59,59);
+  }
    `;
+
 // initializing some variable 
 const mapContainerStyle = {
     height: "80vh",
@@ -30,7 +53,7 @@ const libraries = ['places'];
 const Map = () =>{
  
     // importing context to use coordinates and restaurants
-    const { restaurants, coordinates, locations, backHome } = useContext(LocationContext);
+    const { restaurants, coordinates, locations, setLocationOfUser } = useContext(LocationContext);
 
     // useStates
     // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
@@ -93,6 +116,10 @@ const Map = () =>{
     //     mapRef.current.setZoom(14); 
     // })
 
+    const onLocate = () =>{
+        setLocationOfUser(); 
+    }
+
     // check if theres and  error or if map is still loading 
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
@@ -100,6 +127,9 @@ const Map = () =>{
     return(
         <MapWrapper>
             {/* The map component inside which all other components render */}
+            <button className='locateButton' onClick={onLocate}>
+                <ExploreIcon className='exploreIcon'/>
+            </button>
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={15.25}

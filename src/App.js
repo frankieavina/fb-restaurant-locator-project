@@ -8,30 +8,43 @@ import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 import {getRestaurantData} from "./components/api/api-key";
 import { getCoordinates, getLocation} from './components/api/getCoords';
-import { usePosition } from 'use-position';
 import axios from 'axios'; 
 
 
 function App() {
 
-  const {
-    latitude,
-    longitude,
-    speed,
-    timestamp,
-    accuracy,
-    heading,
-    error,
-  } = usePosition();
-
-  const [locations, setLocations] = useState(getLocation(latitude,longitude));
+  const [locations, setLocations] = useState('Fresno,CA');
   const [places, setPlaces] = useState ([]);
-  // const [coordinates, setCoordinates] = useState({lat:"36.7394421" , long:"-119.7848307" });
-  const [coordinates, setCoordinates] = useState({lat:latitude , long:longitude });
-  const [ status, setStatus ] = useState(null); 
+  const [coordinates, setCoordinates] = useState({lat:"36.7394421" , long:"-119.7848307" });
+  const [status, setStatus] = useState(null); 
+  const [userLocation, setUserLocation] = useState(null);
+  const [userCoords, setUserCoords] = useState(null)
+ 
+///////////////////////////getting user location ////////////////////////////////
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      console.error('Geolocation is not supported.');
+      return;
+    }
+    else{
+      navigator.geolocation.getCurrentPosition(successHandler, errorHandler);      
+    }
+  }, [])
 
-// run on every change to location 
+  const successHandler = position => {
+    const { latitude, longitude } = position.coords;
+    setUserCoords({lat:latitude, lng:longitude});
+    getLocation({lat: latitude, lng:longitude})
+    .then((data) => {
+      setUserLocation(data); 
+    }); 
+  };
+
+  const errorHandler = error => console.error(error.message);
+////////////////////////////////////////////////////////////////////////////////////
+ 
   useEffect(() =>{
+    console.log("Locations",locations)
       getCoordinates(locations)
         .then((results)=>{
 
@@ -40,11 +53,11 @@ function App() {
             setPlaces(data);
           }); 
           setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
-        });
+      });
+
+      console.log(`USERS LOCATION:${userLocation} USERS COORDS:${userCoords}`);
 
   }, [locations]);
-
-
 
 
   return (
@@ -58,6 +71,9 @@ function App() {
           coordinates: coordinates,
           setLocationSearch:(searchLocation) => {
               setLocations(searchLocation);
+          },
+          setLocationOfUser: () => {
+              setLocations(userLocation); 
           },
         }}
       >
