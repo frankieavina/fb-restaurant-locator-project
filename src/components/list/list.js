@@ -10,6 +10,12 @@ const ListWrapper = styled.div`
   flex-wrap:wrap; 
   /* margin: 3rem auto;  */
   overflow-y: scroll; 
+  span-icon{
+
+  }
+  h{
+    
+  }
    `;
 
 const List = () => {
