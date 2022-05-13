@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-
+import Rating from '@mui/material/Rating';
 const ListCardWrapper = styled.div`
 
  form{
@@ -37,7 +36,8 @@ function ListCard({name, description, rating, phone, address,location_id}) {
     <ListCardWrapper onClick={onHandleClick}>
         <form>
           <inputLabel>{name}</inputLabel>
-          <p>{rating}</p>
+          {/* <p>{rating}</p> */}
+          <Rating name="read-only" value={rating} readOnly />
           <p>{phone}</p>
           <p>{address}</p>
           <p>{description}</p>
