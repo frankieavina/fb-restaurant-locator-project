@@ -9,6 +9,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import styled from "styled-components";
 import Rating from '@mui/material/Rating';
 import '../../App.css';
+import ExploreIcon from '@material-ui/icons/Explore';
 
 
 const RestaurantCard = styled.div`
