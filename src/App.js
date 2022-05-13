@@ -6,45 +6,64 @@ import Home from './components/Home/home';
 import PlaceDetails from './components/placeDetails/PlaceDetails'
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
-
 import {getRestaurantData} from "./components/api/api-key";
-import { getCoordinates } from './components/api/getCoords';
-
+import { getCoordinates, getLocation} from './components/api/getCoords';
+import axios from 'axios'; 
 
 
 function App() {
 
-  const [locations, setLocations] = useState("Fresno, CA");
+  const [locations, setLocations] = useState('Fresno,CA');
   const [places, setPlaces] = useState ([]);
   const [coordinates, setCoordinates] = useState({lat:"36.7394421" , long:"-119.7848307" });
+  const [status, setStatus] = useState(null); 
+  const [userLocation, setUserLocation] = useState(null);
+  const [userCoords, setUserCoords] = useState(null)
+ 
+///////////////////////////getting user location ////////////////////////////////
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      console.error('Geolocation is not supported.');
+      return;
+    }
+    else{
+      navigator.geolocation.getCurrentPosition(successHandler, errorHandler);      
+    }
+  }, [])
 
+  const successHandler = position => {
+    const { latitude, longitude } = position.coords;
+    setUserCoords({lat:latitude, lng:longitude});
+    getLocation({lat: latitude, lng:longitude})
+    .then((data) => {
+      setUserLocation(data); 
+    }); 
+  };
+
+  const errorHandler = error => console.error(error.message);
+////////////////////////////////////////////////////////////////////////////////////
+ 
   useEffect(() =>{
+    console.log("Locations",locations)
+      getCoordinates(locations)
+        .then((results)=>{
 
-    getCoordinates(locations)
-      .then((results)=>{
-
-        getRestaurantData({ lat: results.data[0].lat , long: results.data[0].lon })
-        .then((data) =>{
-          setPlaces(data);
-          //console.log(data);
-        });
-
-        //console.log("Area",results.data[0]) 
-        setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
-        
+          getRestaurantData({ lat: results.data[0].lat , long: results.data[0].lon })
+          .then((data) =>{
+            setPlaces(data);
+          }); 
+          setCoordinates({ lat: results.data[0].lat , long: results.data[0].lon }); 
       });
 
-
+      console.log(`USERS LOCATION:${userLocation} USERS COORDS:${userCoords}`);
 
   }, [locations]);
-
-
 
 
   return (
     <div className="App">
       
-      {/* providing context  */}
+    { ( status === null)?
       <LocationContext.Provider 
         value={{
           locations:locations,
@@ -52,6 +71,9 @@ function App() {
           coordinates: coordinates,
           setLocationSearch:(searchLocation) => {
               setLocations(searchLocation);
+          },
+          setLocationOfUser: () => {
+              setLocations(userLocation); 
           },
         }}
       >
@@ -63,7 +85,12 @@ function App() {
           </Route>          
         </Routes>
 
-      </LocationContext.Provider>
+      </LocationContext.Provider> :
+      <div>
+        <h3>{status}</h3>  
+      </div>      
+    }
+
     </div>
   );
 }
