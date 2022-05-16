@@ -3,7 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 // importing Context (location context)
 import LocationContext from "../../context/LocationContext";
-// import { Autocomplete } from "@react-google-maps/api";
+import { Autocomplete, Data } from "@react-google-maps/api";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+import usePlacesAutocomplete from "use-places-autocomplete";
 
 const HeaderWrapper = styled.header`
   align-items:flex-start;
@@ -21,12 +30,15 @@ const HeaderWrapper = styled.header`
     border-radius:1px solid black;
   }
   input{
-    font-size:25px;
+    font-size:18px;
     width:600px;
     height:50%;
     background-color: white;
     color:black;
     float: left;
+  }
+  .inputC:hover{
+    cursor: pointer; 
   }
   button{
     background-color:blue;
@@ -40,28 +52,48 @@ const Header = () => {
   // consuming or using location context 
   const { setLocationSearch } = useContext(LocationContext)
   const [locationName, setLocationName] = useState('')
-  const handleClick =(e) => {
-    e.preventDefault();
-    setLocationSearch(locationName);
+  
+  const handleSelect =(address) => {
+    setValue(address, false);
+    setLocationName(address);
+    setLocationSearch(address);
+    clearSuggestions(); 
   }
+
+  const handleInput = (e) => {
+    setLocationName(e.target.value);
+    setValue(e.target.value); 
+  }
+
+  const { ready, value, suggestions:{status,data}, setValue, clearSuggestions,} = usePlacesAutocomplete({
+    // setting lat and lng of so when we search we get locations near this area 
+    // within a radius of 500 km 
+    requestOptions:{
+      location: {lat: () => 36.7394421 , lng: () => -119.7848307},
+      radius: 200 * 1000, 
+    },
+  });
   
   return (
     < HeaderWrapper>
       <h1>Location Search {locationName}:</h1>
-
-      <div className="search-box">
-        {/* <Autocomplete> */}
-          <input
-            className="search-text"
-            type="text"
-            name=""
-            value={locationName}
-            placeholder="Type to search location....."
-            onChange={(e) => {setLocationName(e.target.value)}}
-          />
-        {/* </Autocomplete> */}
-        <button onClick={handleClick}>Search</button>
-      </div>
+      <Combobox onSelect={handleSelect}>
+        <ComboboxInput
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+          placeholder='Search for location'
+          className="inputC"
+        />
+        <ComboboxPopover>
+          <ComboboxList>
+            {status === "OK" && 
+              data.map(({ id, description }) => (
+                <ComboboxOption key={id} value={description} />
+            ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
     </ HeaderWrapper>
   );
 };
