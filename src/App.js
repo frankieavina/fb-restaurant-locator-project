@@ -69,6 +69,7 @@ function App() {
           locations:locations,
           restaurants: places,
           coordinates: coordinates,
+          userCoords,
           setLocationSearch:(searchLocation) => {
               setLocations(searchLocation);
           },

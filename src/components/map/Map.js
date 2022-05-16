@@ -4,14 +4,16 @@ import {
     GoogleMap,
     useLoadScript,
     Marker,
-    InfoWindow
+    InfoWindow,
+    DirectionsRenderer
 } from '@react-google-maps/api'; 
 import LocationContext from '../../context/LocationContext';
 import mapStyles from "./mapStyles";
-import FastfoodIcon from '@material-ui/icons/Fastfood';
 import '../../App.css'
 import styled from "styled-components";
 import ExploreIcon from '@material-ui/icons/Explore';
+import DirectionsIcon from '@material-ui/icons/Directions';
+import Distance from './Distance';
 
 
 const MapWrapper = styled.div`
@@ -36,6 +38,21 @@ const MapWrapper = styled.div`
     font-size: 3rem; 
     color: rgb(59,59,59);
   }
+  .directionsIcon{
+      color: blue; 
+  }
+  .directionsIcon:hover{
+    cursor:pointer;
+    color: red; 
+  }
+  .distance{
+    position: absolute; 
+    bottom: 1.5rem; 
+    left: 0.001rem; 
+    background: none;
+    border: none;
+    z-index: 10;
+  }
    `;
 
 // initializing some variable 
@@ -50,16 +67,22 @@ const options = {
 };
 const libraries = ['places'];
 
+//The reason we enforce this is because people commonly misunderstand the difference between local variables, 
+//imported modules, and global variables, and so we want to always make it clear in the code when you use 
+// a global variable.(may also be caused by ESLINT )
+const google = window.google = window.google ? window.google : {}
+
 const Map = () =>{
  
     // importing context to use coordinates and restaurants
-    const { restaurants, coordinates, locations, setLocationOfUser } = useContext(LocationContext);
+    const { restaurants, coordinates, locations, userCoords, setLocationOfUser } = useContext(LocationContext);
 
     // useStates
     // when we click on the map "markers" will hold an object(s) with the lat,lng,and time of all the clicks
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
     const [center, setCenter] = useState();
+    const [directions, setDirections] = useState();
 
     useEffect(() =>{
         //setting the center
@@ -124,12 +147,34 @@ const Map = () =>{
     if (loadError) return console.log("Error Loading maps");
     if (!isLoaded) return console.log("Loading Maps");
 
+    const fetchDirections = ({lat,lng}) =>{
+        if(!userCoords) return;
+
+        const service = new google.maps.DirectionsService();
+        service.route(
+            {
+              origin: new google.maps.LatLng(parseFloat(userCoords.lat,10),parseFloat(userCoords.lng,10)),
+              destination: new google.maps.LatLng(lat,lng),
+              travelMode: google.maps.TravelMode.DRIVING,
+            },
+            (result, status) => {
+              if (status === "OK" && result) {
+                setDirections(result);
+              }
+              else{
+                  console.error(`error fetching directions ${result}`)
+              }
+            }
+          );
+    }
+
     return(
         <MapWrapper>
             {/* The map component inside which all other components render */}
             <button className='locateButton' onClick={onLocate}>
                 <ExploreIcon className='exploreIcon'/>
             </button>
+            {directions && <Distance className='distance' leg={directions.routes[0].legs[0]} />}
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={15.25}
@@ -139,6 +184,18 @@ const Map = () =>{
                 // onLoad={onMapLoad} ---This callback is called when 
                 //the map instance has loaded. It is called with the map instance.
             > 
+                {directions && (
+                    <DirectionsRenderer
+                    directions={directions}
+                    options={{
+                        polylineOptions: {
+                        zIndex: 50,
+                        strokeColor: "#1976D2",
+                        strokeWeight: 5,
+                        },
+                    }}
+                    />
+                )}
                 {markers.map((marker) => (
                     <Marker 
                         key={marker.location_id} 
@@ -158,6 +215,9 @@ const Map = () =>{
                             </div>
                             <p> Address:{selected.address_obj.street1} {selected.address_obj.city}, {selected.address_obj.state}</p>
                             <p> Phone Number: {selected.phone}</p>
+                            <DirectionsIcon className='directionsIcon' onClick={()=> 
+                                fetchDirections({lat: parseFloat(selected.latitude,10), lng: parseFloat(selected.longitude,10)})
+                            }/>
                         </div>
                     </InfoWindow>
                 ) : 
