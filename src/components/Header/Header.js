@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 // importing Context (location context)
 import LocationContext from "../../context/LocationContext";
+// import { Autocomplete } from "@react-google-maps/api";
 
 const HeaderWrapper = styled.header`
   align-items:flex-start;
@@ -49,14 +50,16 @@ const Header = () => {
       <h1>Location Search {locationName}:</h1>
 
       <div className="search-box">
-        <input
-          className="search-text"
-          type="text"
-          name=""
-          value={locationName}
-          placeholder="Type to search location....."
-          onChange={(e) => {setLocationName(e.target.value)}}
-        />
+        {/* <Autocomplete> */}
+          <input
+            className="search-text"
+            type="text"
+            name=""
+            value={locationName}
+            placeholder="Type to search location....."
+            onChange={(e) => {setLocationName(e.target.value)}}
+          />
+        {/* </Autocomplete> */}
         <button onClick={handleClick}>Search</button>
       </div>
     </ HeaderWrapper>
