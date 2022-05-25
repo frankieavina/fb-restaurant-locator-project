@@ -46,13 +46,13 @@ React Router -> route from home to restaurant details and back
 
 ### Features
 
-*Pins by default to Fresno location. 
-*When searching it gives you suggestions(autocomplete) of places similar to search
-*Will mark restaurants near location picked
-*There will be a list next to the nap with details of the restaurant 
-*When you click on the marker gives you small details of location (info window) 
-*If you click on a list component or title of restaurant on the marker it will route you to details page 
-*If you click on top right corner compass icon it will pan to users location 
-*If you click on the directions icon , located on markers info window, if will give you directions to locations
-*With additional info such as how far and how Long it would take you to get there. 
+ * Pins by default to Fresno location. 
+ * When searching it gives you suggestions(autocomplete) of places similar to search
+ * Will mark restaurants near location picked
+ * There will be a list next to the nap with details of the restaurant 
+ * When you click on the marker gives you small details of location (info window) 
+ * If you click on a list component or title of restaurant on the marker it will route you to details page 
+ * If you click on top right corner compass icon it will pan to users location 
+ * If you click on the directions icon , located on markers info window, if will give you directions to locations
+ * With additional info such as how far and how Long it would take you to get there. 
 
